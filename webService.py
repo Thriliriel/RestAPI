@@ -2,13 +2,11 @@ import cherrypy
 import pandas as pd
 import Tokenization
 import FaceRecognition
-#import Neo4J
 import Wordvec
 import KeywordFilter
 
 tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
-#neo4j = Neo4J.Neo4J("bolt://localhost:7687", "neo4j", "sh4d0w")
 wordvec = Wordvec.Wordvec()
 
 class MyWebService(object):
@@ -40,15 +38,6 @@ class MyWebService(object):
         output = faces.runNewPerson(df)
         return output.to_json()
 
-    #@cherrypy.expose
-    #@cherrypy.tools.json_out()
-    #@cherrypy.tools.json_in()
-    #def neo4jTransaction(self):
-    #    data = cherrypy.request.json
-    #    df = pd.DataFrame(data)
-    #    output = neo4j.run(df)
-    #    return output.to_json()
-
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
@@ -61,8 +50,8 @@ class MyWebService(object):
 
 if __name__ == '__main__':
     #keyword stuff first
-    keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
-    keywordstuff.updateHistoric()
+    #keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
+    #keywordstuff.updateHistoric()
 
     config = {'server.socket_host': '0.0.0.0'}
     cherrypy.config.update(config)
