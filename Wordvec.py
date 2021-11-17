@@ -6,7 +6,8 @@ class Wordvec:
 	w2v_model = None
 
 	def __init__(self):
-		self.w2v_model = gensim.downloader.load('word2vec-google-news-300')
+		#self.w2v_model = gensim.downloader.load('word2vec-google-news-300')
+		self.w2v_model = gensim.downloader.load('glove-twitter-25')
 		self.w2v_model.init_sims(replace=True)
 
 	def run(self, text):
