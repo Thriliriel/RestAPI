@@ -1,5 +1,5 @@
 CMake
-opencv-python
+opencv-python-headless
 datetime
 face_recognition
 requests
