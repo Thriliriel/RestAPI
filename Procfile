@@ -1,1 +1,1 @@
-web: python webService.py
+web: python webService.py runserver 0.0.0.0:5000
