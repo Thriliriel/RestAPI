@@ -1,1 +1,1 @@
-web: python webService.py runserver 0.0.0.0:8080
+worker: python webService.py
