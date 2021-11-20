@@ -11,6 +11,7 @@ nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
+nltk.download('stopwords')
 
 #cherrypy.config.update({'server.socket_port': 5000})
 
