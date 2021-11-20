@@ -7,6 +7,7 @@ import KeywordFilter
 import os
 
 import nltk
+nltk.download('vader_lexicon')
 nltk.download('punkt')
 
 #cherrypy.config.update({'server.socket_port': 5000})
