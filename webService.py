@@ -5,6 +5,8 @@ import FaceRecognition
 import Wordvec
 import KeywordFilter
 
+cherrypy.config.update({'server.socket_port': 5000})
+
 tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
 wordvec = Wordvec.Wordvec()
