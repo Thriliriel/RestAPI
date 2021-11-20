@@ -9,6 +9,7 @@ import os
 import nltk
 nltk.download('vader_lexicon')
 nltk.download('punkt')
+nltk.download('wordnet')
 
 #cherrypy.config.update({'server.socket_port': 5000})
 
