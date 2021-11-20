@@ -4,8 +4,9 @@ import Tokenization
 import FaceRecognition
 import Wordvec
 import KeywordFilter
+import os
 
-cherrypy.config.update({'server.socket_port': 5000})
+#cherrypy.config.update({'server.socket_port': 5000})
 
 tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
@@ -55,7 +56,7 @@ if __name__ == '__main__':
     #keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
     #keywordstuff.updateHistoric()
 
-    config = {'server.socket_host': '0.0.0.0'}
+    config = {'server.socket_host': '0.0.0.0', 'server.socket_port': int(os.environ.get('PORT', 5000))}
     cherrypy.config.update(config)
     cherrypy.quickstart(MyWebService())
 
