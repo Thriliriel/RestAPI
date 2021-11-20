@@ -6,6 +6,9 @@ import Wordvec
 import KeywordFilter
 import os
 
+import nltk
+nltk.download('vader_lexicon')
+
 #cherrypy.config.update({'server.socket_port': 5000})
 
 tokens = Tokenization.Tokenization()
