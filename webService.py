@@ -19,6 +19,11 @@ tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
 wordvec = Wordvec.Wordvec()
 
+try:
+    os.mkdir("Data")
+except OSError as error:
+    print(error)
+
 class MyWebService(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
