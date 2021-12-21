@@ -250,6 +250,8 @@ class FaceRecognition:
 		print(known_names[worst_match] + " : " + str(dist[worst_match]))
 
 	def comp1N(self, foto, num_matches, direc, th):
+		return "false"
+
 		unknown_image = face_recognition.load_image_file(foto)
 	
 		if unknown_image.all(None):
