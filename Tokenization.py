@@ -29,6 +29,11 @@ class Tokenization:
         else:
             #remove punctuations
             #text = text.translate(None, string.punctuation)
+            # initializing punctuations string
+            punc = '''!()-[]{};:'"\,<>./@#$%^&*_~'''
+            for ele in text:
+                if ele in punc:
+                    text = text.replace(ele, "")
 
             #get the sentiment analisys (positive or negative)
             vader_analyzer = SentimentIntensityAnalyzer()
