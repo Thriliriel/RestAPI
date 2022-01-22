@@ -68,7 +68,7 @@ if __name__ == '__main__':
     #keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
     #keywordstuff.updateHistoric()
 
-    config = {'server.socket_host': '0.0.0.0', 'server.socket_port': int(os.environ.get('PORT', 5000))}
+    config = {'tools.sessions.timeout': 60, 'server.socket_host': '0.0.0.0', 'server.socket_port': int(os.environ.get('PORT', 5000))}
     cherrypy.config.update(config)
     cherrypy.quickstart(MyWebService())
 
