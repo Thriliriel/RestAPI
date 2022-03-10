@@ -5,7 +5,7 @@ import FaceRecognition
 import Wordvec
 import KeywordFilter
 import os
-import SentenceBuilder
+#import SentenceBuilder
 
 import nltk
 nltk.download('vader_lexicon')
@@ -19,7 +19,7 @@ nltk.download('stopwords')
 tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
 wordvec = Wordvec.Wordvec()
-sb = SentenceBuilder.SentenceBuilder()
+#sb = SentenceBuilder.SentenceBuilder()
 
 #try:
 #    os.mkdir("Data")
@@ -65,16 +65,16 @@ class MyWebService(object):
         output = wordvec.run(df)
         return output.to_json()
 
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.json_in()
-    def sentenceBuilder(self):
-        data = cherrypy.request.json
-        #print(data)
-        df = pd.DataFrame(data)
-        output = sb.run(df)
-        #return output.to_json()
-        return output
+    #@cherrypy.expose
+    #@cherrypy.tools.json_out()
+    #@cherrypy.tools.json_in()
+    #def sentenceBuilder(self):
+    #    data = cherrypy.request.json
+    #    #print(data)
+    #    df = pd.DataFrame(data)
+    #    output = sb.run(df)
+    #    #return output.to_json()
+    #    return output
 
 if __name__ == '__main__':
     #keyword stuff first
