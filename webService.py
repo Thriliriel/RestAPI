@@ -5,6 +5,7 @@ import FaceRecognition
 import Wordvec
 import KeywordFilter
 import os
+import SentenceBuilder
 
 import nltk
 nltk.download('vader_lexicon')
@@ -18,6 +19,7 @@ nltk.download('stopwords')
 tokens = Tokenization.Tokenization()
 faces = FaceRecognition.FaceRecognition()
 wordvec = Wordvec.Wordvec()
+sb = SentenceBuilder.SentenceBuilder()
 
 #try:
 #    os.mkdir("Data")
@@ -63,6 +65,17 @@ class MyWebService(object):
         output = wordvec.run(df)
         return output.to_json()
 
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def sentenceBuilder(self):
+        data = cherrypy.request.json
+        #print(data)
+        df = pd.DataFrame(data)
+        output = sb.run(df)
+        #return output.to_json()
+        return output
+
 if __name__ == '__main__':
     #keyword stuff first
     #keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
@@ -77,3 +90,4 @@ if __name__ == '__main__':
 #curl -d "{\"image\" : [\"camImage.png\"], \"direc\" : [\"Data\"], \"th\" : [0.5], \"mode\" : [\"n\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/recognize
 #curl -d "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"Knob\"], \"typeNode\" : [\"Person\"], \"label\" : [\"age:31,ocupation:'teacher'\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/neo4jTransaction
 #curl -d "{\"text\" : [\"potato-father-shirt\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/similarWords 
+#curl -d "{\"text\" : [\"Knob*loves*pizza\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/sentenceBuilder

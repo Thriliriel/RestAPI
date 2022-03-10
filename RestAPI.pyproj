@@ -29,6 +29,7 @@
     <Compile Include="KeywordFilter.py" />
     <Compile Include="loader.py" />
     <Compile Include="Neo4J.py" />
+    <Compile Include="SentenceBuilder.py" />
     <Compile Include="Tokenization.py" />
     <Compile Include="VideoLogger.py" />
     <Compile Include="webService.py">
