@@ -7,4 +7,3 @@ pandas
 cherrypy
 nltk
 gensim
-keytotext
