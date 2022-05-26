@@ -13,6 +13,9 @@ nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('stopwords')
+nltk.download('omw-1.4')
+
+import cherrypy_cors
 
 #cherrypy.config.update({'server.socket_port': 5000})
 
@@ -27,63 +30,100 @@ wordvec = Wordvec.Wordvec()
 #    print(error)
 
 class MyWebService(object):
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.json_in()
-    def tokenize(self):
-        data = cherrypy.request.json
-        #print(data)
-        df = pd.DataFrame(data)
-        output = tokens.run(df)
-        return output.to_json()
+	@cherrypy.expose
+	@cherrypy.tools.json_out()
+	@cherrypy.tools.json_in()
+	def tokenize(self):
+		"""Handle HTTP requests against ``/tokenize`` URI."""
+		if cherrypy.request.method == 'OPTIONS':
+		#	# This is a request that browser sends in CORS prior to
+		#	# sending a real request.
 
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.json_in()
-    def recognize(self):
-        data = cherrypy.request.json
-        df = pd.DataFrame(data)
-        output = faces.run(df)
-        return output.to_json()
+		#	# Set up extra headers for a pre-flight OPTIONS request.
+			return cherrypy_cors.preflight(allowed_methods=['GET', 'POST'])
 
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.json_in()
-    def savePerson(self):
-        data = cherrypy.request.json
-        df = pd.DataFrame(data)
-        output = faces.runNewPerson(df)
-        return output.to_json()
+		data = cherrypy.request.json
+		#print(data)
+		df = pd.DataFrame(data)
+		output = tokens.run(df)
+		return output.to_json()
 
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    @cherrypy.tools.json_in()
-    def similarWords(self):
-        data = cherrypy.request.json
-        #print(data)
-        df = pd.DataFrame(data)
-        output = wordvec.run(df)
-        return output.to_json()
+	@cherrypy.expose
+	@cherrypy.tools.json_out()
+	@cherrypy.tools.json_in()
+	def recognize(self):
+		"""Handle HTTP requests against ``/tokenize`` URI."""
+		if cherrypy.request.method == 'OPTIONS':
+		#	# This is a request that browser sends in CORS prior to
+		#	# sending a real request.
 
-    #@cherrypy.expose
-    #@cherrypy.tools.json_out()
-    #@cherrypy.tools.json_in()
-    #def sentenceBuilder(self):
-    #    data = cherrypy.request.json
-    #    #print(data)
-    #    df = pd.DataFrame(data)
-    #    output = sb.run(df)
-    #    #return output.to_json()
-    #    return output
+		#	# Set up extra headers for a pre-flight OPTIONS request.
+			return cherrypy_cors.preflight(allowed_methods=['GET', 'POST'])
+
+		data = cherrypy.request.json
+		df = pd.DataFrame(data)
+		output = faces.run(df)
+		return output.to_json()
+
+	@cherrypy.expose
+	@cherrypy.tools.json_out()
+	@cherrypy.tools.json_in()
+	def savePerson(self):
+		"""Handle HTTP requests against ``/tokenize`` URI."""
+		if cherrypy.request.method == 'OPTIONS':
+		#	# This is a request that browser sends in CORS prior to
+		#	# sending a real request.
+
+		#	# Set up extra headers for a pre-flight OPTIONS request.
+			return cherrypy_cors.preflight(allowed_methods=['GET', 'POST'])
+
+		data = cherrypy.request.json
+		df = pd.DataFrame(data)
+		output = faces.runNewPerson(df)
+		return output.to_json()
+
+	@cherrypy.expose
+	@cherrypy.tools.json_out()
+	@cherrypy.tools.json_in()
+	def similarWords(self):
+		"""Handle HTTP requests against ``/tokenize`` URI."""
+		if cherrypy.request.method == 'OPTIONS':
+		#	# This is a request that browser sends in CORS prior to
+		#	# sending a real request.
+
+		#	# Set up extra headers for a pre-flight OPTIONS request.
+			return cherrypy_cors.preflight(allowed_methods=['GET', 'POST'])
+
+		data = cherrypy.request.json
+		#print(data)
+		df = pd.DataFrame(data)
+		output = wordvec.run(df)
+		return output.to_json()
+
+	#@cherrypy.expose
+	#@cherrypy.tools.json_out()
+	#@cherrypy.tools.json_in()
+	#def sentenceBuilder(self):
+	#    data = cherrypy.request.json
+	#    #print(data)
+	#    df = pd.DataFrame(data)
+	#    output = sb.run(df)
+	#    #return output.to_json()
+	#    return output
 
 if __name__ == '__main__':
-    #keyword stuff first
-    #keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
-    #keywordstuff.updateHistoric()
-
-    config = {'tools.sessions.timeout': 60, 'server.socket_host': '0.0.0.0', 'server.socket_port': int(os.environ.get('PORT', 5000))}
-    cherrypy.config.update(config)
-    cherrypy.quickstart(MyWebService())
+	#keyword stuff first
+	#keywordstuff = KeywordFilter.KeywordFilter("../../UnityProjects/Arthur/")
+	#keywordstuff.updateHistoric()
+	cherrypy_cors.install()
+	config = {'tools.sessions.timeout': 60, 'server.socket_host': '0.0.0.0', 'server.socket_port': int(os.environ.get('PORT', 5000)), 'cors.expose.on': True} #, 'cors.expose.on': True
+	cherrypy.config.update(config)
+	#change to final link after
+	#cherrypy.response.headers["Access-Control-Allow-Origin"] = "https://secret-spire-67273.herokuapp.com"
+	#cherrypy.response.headers["Access-Control-Allow-Credentials"] = "true"
+	#cherrypy.response.headers["Access-Control-Allow-Headers"] = "Origin, Content-Type, Accept, X-Requested-With, X-Access-Token, X-Application-Name, X-Request-Sent-Time"
+	#cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+	cherrypy.quickstart(MyWebService())
 
 #running: 
 #curl -d "{\"text\" : [\"i am not feeling good\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/tokenize
